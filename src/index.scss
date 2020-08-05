@@ -1,0 +1,30 @@
+@import "./styles/index.scss";
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: $font-grey;
+  //background-color: $background-dark;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+.Toastify {
+  .Toastify__toast-container--topcenter {
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding: 0;
+    margin: 0;
+
+    .Toastify__toast-success {
+      background-color: $primary-color;
+    }
+    .Toastify__close-button {
+      align-items: center;
+    }
+  }
+}
