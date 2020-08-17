@@ -1,8 +1,9 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import Home from "../pages/Home";
-
+import Settings from "../pages/Settings";
 export default function Routes(props) {
+  const { user, setReloadApp } = props;
   return (
     <Switch>
       <Route path="/" exact>
@@ -12,7 +13,7 @@ export default function Routes(props) {
         <h1>artists</h1>
       </Route>
       <Route path="/settings" exact>
-        <h1>Settings</h1>
+        <Settings user={user} setReloadApp={setReloadApp} />
       </Route>
     </Switch>
   );

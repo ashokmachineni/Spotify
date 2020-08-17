@@ -22,7 +22,7 @@ function TopBar(props) {
       </div>
       <div className="top-bar__right">
         <Link to="/settings">
-          <Image src={userImage} />
+          <Image src={user.photoURL ? user.photoURL : user.userImage} />
           {user.displayName}
           <Icon name="power off" onClick={logOutIcon} />
         </Link>
