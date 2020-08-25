@@ -4,6 +4,8 @@ import { Menu, Icon } from "semantic-ui-react";
 import { Link, withRouter } from "react-router-dom";
 import { isUserAdmin } from "../../utils/Api";
 import BasicModel from "../Model/BasicModel";
+import AddArtistForm from "../Artists/AddArtistForm";
+
 function MenuLeft(props) {
   const { user, location } = props;
   const [activeMenu, setActiveMenu] = useState(location.pathname);
@@ -26,7 +28,7 @@ function MenuLeft(props) {
     switch (type) {
       case "artist":
         setTitleModel("New Artist");
-        setContentModel(<h2>Add artist</h2>);
+        setContentModel(<AddArtistForm setShowModel={setShowModel} />);
         setShowModel(true);
         break;
       case "album":
