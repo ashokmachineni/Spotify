@@ -31,4 +31,14 @@
       }
     }
   }
+  .user-email,
+  .user-password {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    h3 {
+      margin: 0;
+    }
+  }
 }
