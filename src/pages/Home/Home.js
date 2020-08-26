@@ -6,6 +6,17 @@ import "./Home.scss";
 
 const db = firebase.firestore(firebase);
 export default function Home(props) {
+  const [artists, setArtists] = useState([]);
+  useEffect(() => {
+    db.collection("artists")
+      .get()
+      .then(response => {
+        response.docs.map(artist => {
+          console.log(artist.data());
+        });
+      });
+  }, []);
+
   return (
     <>
       <BannerHome />
