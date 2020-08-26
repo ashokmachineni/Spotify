@@ -4,6 +4,13 @@ import { useDropzone } from "react-dropzone";
 import "./AddArtistForm.scss";
 import NoImage from "../../../assets/png/no-image.png";
 import { toast } from "react-toastify";
+import { v4 as uuidv4 } from "uuid";
+import firebase from "../../../utils/Firebase";
+import "firebase/storage";
+import "firebase/firestore";
+
+const db = firebase.firestore(firebase);
+
 export default function AddArtistForm(props) {
   const { setShowModel } = props;
   const [formData, setFormData] = useState(initialValueForm());
@@ -22,6 +29,15 @@ export default function AddArtistForm(props) {
     noKeyboard: true,
     onDrop
   });
+
+  const uploadImage = fileName => {
+    const ref = firebase
+      .storage()
+      .ref()
+      .child(`artist/${fileName}`);
+    return ref.put(file);
+  };
+
   const onSubmit = () => {
     if (!formData.name) {
       toast.warning("enter Artist Name");
@@ -29,7 +45,35 @@ export default function AddArtistForm(props) {
       toast.warning("please choose an image to upload");
     } else {
       setIsLoading(true);
+      const fileName = uuidv4();
+      uploadImage(fileName)
+        .then(() => {
+          db.collection("artists")
+            .add({
+              name: formData.name,
+              banner: fileName
+            })
+            .then(() => {
+              toast.success("Artist profile created successfully");
+              resetForm();
+              setIsLoading(false);
+              setShowModel(false);
+            })
+            .catch(() => {
+              toast.error("Error while creating artist profile");
+              setIsLoading(false);
+            });
+        })
+        .catch(() => {
+          toast.error("its failed while uploading image");
+          setIsLoading(false);
+        });
     }
+  };
+  const resetForm = () => {
+    setFormData(initialValueForm());
+    setFile(null);
+    setBanner(null);
   };
 
   return (
