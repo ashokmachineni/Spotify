@@ -28,7 +28,12 @@ export default function Home(props) {
     <>
       <BannerHome />
       <div className="home">
-        <BasicSliderItems title="Latest Artists" data={artists} />
+        <BasicSliderItems
+          title="Latest Artists"
+          data={artists}
+          folderImage="artist"
+          urlName="artist"
+        />
         <h1>homess</h1>
       </div>
     </>
