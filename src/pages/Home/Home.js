@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import BannerHome from "../../components/BannerHome";
+import firebase from "../../utils/Firebase";
+import "firebase/firestore";
+import "./Home.scss";
 
-function Home(props) {
+const db = firebase.firestore(firebase);
+export default function Home(props) {
   return (
-    <div>
-      <h1>homess</h1>
-    </div>
+    <>
+      <BannerHome />
+      <div className="home">
+        <h1>homess</h1>
+      </div>
+    </>
   );
 }
-
-export default Home;
