@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import firebase from "../../utils/Firebase";
 import "firebase/firestore";
 import { map } from "lodash";
+import { Link } from "react-router-dom";
+import { Grid } from "semantic-ui-react";
 import "./Artists.scss";
 
 const db = firebase.firestore(firebase);
 export default function Artists() {
   const [artists, setArtists] = useState([]);
-  console.log(artists);
+
   useEffect(() => {
     db.collection("artists")
       .get()
@@ -23,7 +25,41 @@ export default function Artists() {
   }, []);
   return (
     <div className="artists">
-      <h3>Artists</h3>
+      <h1>Artists..</h1>
+      <Grid>
+        {map(artists, artist => (
+          <Grid.Column key={artist.id} mobile={8} tablet={4} computer={3}>
+            <Artist artist={artist} />
+          </Grid.Column>
+        ))}
+      </Grid>
     </div>
+  );
+}
+function Artist(props) {
+  const { artist } = props;
+
+  const [bannerUrl, setBannerUrl] = useState(null);
+  useEffect(() => {
+    firebase
+      .storage()
+      .ref(`artist/${artist.banner}`)
+      .getDownloadURL()
+      .then(url => {
+        setBannerUrl(url);
+      });
+  }, [artist]);
+  return (
+    <Link to={`/artist/${artist.id}`}>
+      <div className="artists__items">
+        <div
+          className="avatar"
+          style={{
+            backgroundImage: `url('${bannerUrl}')`
+          }}
+        />
+        <h3>{artist.name}</h3>
+      </div>
+    </Link>
   );
 }
