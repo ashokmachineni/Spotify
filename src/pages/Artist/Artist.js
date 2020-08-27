@@ -3,12 +3,13 @@ import { withRouter } from "react-router-dom";
 import firebase from "../../utils/Firebase";
 import "firebase/firestore";
 import "./Artist.scss";
+import BannerArtist from "../../components/Artists/BannerArtist";
 
 const db = firebase.firestore(firebase);
 function Artist(props) {
   const { match } = props;
   const [artist, setArtist] = useState(null);
-  console.log(artist);
+
   useEffect(() => {
     db.collection("artists")
       .doc(match.params.id)
@@ -19,8 +20,9 @@ function Artist(props) {
   }, [match]);
 
   return (
-    <div>
-      <h1>Artistssss</h1>
+    <div className="artist">
+      {artist && <BannerArtist artist={artist} />}
+      <h2>More Info...</h2>
     </div>
   );
 }

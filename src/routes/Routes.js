@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import Home from "../pages/Home";
 import Settings from "../pages/Settings";
 import Artist from "../pages/Artist";
+import Artists from "../pages/Artists";
 
 export default function Routes(props) {
   const { user, setReloadApp } = props;
@@ -12,7 +13,7 @@ export default function Routes(props) {
         <Home />
       </Route>
       <Route path="/artists" exact>
-        <h1>artists</h1>
+        <Artists />
       </Route>
       <Route path="/artist/:id" exact>
         <Artist />
