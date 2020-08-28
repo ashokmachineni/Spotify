@@ -9,7 +9,8 @@ import BasicSliderItems from "../../components/Sliders/BasicSliderItems";
 const db = firebase.firestore(firebase);
 export default function Home(props) {
   const [artists, setArtists] = useState([]);
-
+  const [albums, setAlbums] = useState([]);
+  console.log(albums);
   useEffect(() => {
     db.collection("artists")
       .get()
@@ -23,6 +24,19 @@ export default function Home(props) {
         setArtists(arrayArtists);
       });
   }, []);
+  useEffect(() => {
+    db.collection("albums")
+      .get()
+      .then(response => {
+        const arrayAlbums = [];
+        map(response.docs, album => {
+          const data = album.data();
+          data.id = album.id;
+          arrayAlbums.push(data);
+        });
+        setAlbums(arrayAlbums);
+      });
+  }, []);
 
   return (
     <>
@@ -34,7 +48,12 @@ export default function Home(props) {
           folderImage="artist"
           urlName="artist"
         />
-        <h1>homess</h1>
+        <BasicSliderItems
+          title="Latest Albums"
+          data={albums}
+          folderImage="album"
+          urlName="album"
+        />
       </div>
     </>
   );

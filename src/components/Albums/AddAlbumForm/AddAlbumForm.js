@@ -2,10 +2,12 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Form, Button, Input, Icon, Dropdown, Image } from "semantic-ui-react";
 import { useDropzone } from "react-dropzone";
 import { map } from "lodash";
+import { v4 as uuidv4 } from "uuid";
 import NoImage from "../../../assets/png/no-image.png";
 import firebase from "../../../utils/Firebase";
 import { toast } from "react-toastify";
 import "firebase/firestore";
+import "firebase/storage";
 import "./AddAlbumForm.scss";
 
 const db = firebase.firestore(firebase);
@@ -43,6 +45,13 @@ export default function AddAlbumForm(props) {
     noKeyboard: true,
     onDrop
   });
+  const uploadImage = fileName => {
+    const ref = firebase
+      .storage()
+      .ref()
+      .child(`album/${fileName}`);
+    return ref.put(file);
+  };
 
   const onSubmit = () => {
     if (!formData.name || !formData.artist) {
@@ -51,7 +60,36 @@ export default function AddAlbumForm(props) {
       toast.warning("please upload image");
     } else {
       setIsLoading(true);
+      const fileName = uuidv4();
+      uploadImage(fileName)
+        .then(() => {
+          db.collection("albums")
+            .add({
+              name: formData.name,
+              artist: formData.artist,
+              banner: fileName
+            })
+            .then(() => {
+              toast.success("Album created suceessfully");
+              resetForm();
+              setIsLoading(false);
+              setShowModel(false);
+            })
+            .catch(() => {
+              toast.warning("album upload failed");
+              setIsLoading(false);
+            });
+        })
+        .catch(() => {
+          toast.warning("image uploading failed");
+          setIsLoading(false);
+        });
     }
+  };
+  const resetForm = () => {
+    setFormData(initialValueForm());
+    setFile(null);
+    setAlbumImage(null);
   };
   return (
     <Form onSubmit={onSubmit} className="add-album-form">
