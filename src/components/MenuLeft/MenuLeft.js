@@ -5,6 +5,7 @@ import { Link, withRouter } from "react-router-dom";
 import { isUserAdmin } from "../../utils/Api";
 import BasicModel from "../Model/BasicModel";
 import AddArtistForm from "../Artists/AddArtistForm";
+import AddAlbumForm from "../Albums/AddAlbumForm/AddAlbumForm";
 
 function MenuLeft(props) {
   const { user, location } = props;
@@ -33,7 +34,7 @@ function MenuLeft(props) {
         break;
       case "album":
         setTitleModel("New album");
-        setContentModel(<h2>add album</h2>);
+        setContentModel(<AddAlbumForm setShowModel={setShowModel} />);
         setShowModel(true);
         break;
       case "song":
@@ -78,6 +79,10 @@ function MenuLeft(props) {
             <Menu.Item onClick={() => handlerModal("artist")}>
               <Icon name="plus square outline" />
               New Artist
+            </Menu.Item>
+            <Menu.Item onClick={() => handlerModal("album")}>
+              <Icon name="plus square outline" />
+              New Album
             </Menu.Item>
             <Menu.Item onClick={() => handlerModal("song")}>
               <Icon name="plus square outline" />
