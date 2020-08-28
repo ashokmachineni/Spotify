@@ -64,7 +64,7 @@ export default withRouter(Album);
 function HeaderAlbum(props) {
   const { album, artist, imageUrl } = props;
   return (
-    <div>
+    <>
       <div
         className="image"
         style={{ backgroundImage: `url('${imageUrl}')` }}
@@ -75,6 +75,6 @@ function HeaderAlbum(props) {
           By: <span>{artist.name}</span>
         </p>
       </div>
-    </div>
+    </>
   );
 }

@@ -16,7 +16,7 @@ export default function BasicSliderItems(props) {
     slidesToScroll: 1,
     className: "basic-slider-items__list"
   };
-  if (size(data) < 5) {
+  if (size(data) < 2) {
     return null;
   }
   return (

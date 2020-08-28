@@ -4,6 +4,7 @@ import firebase from "../../utils/Firebase";
 import { map } from "lodash";
 import "firebase/firestore";
 import "./Artist.scss";
+import BasicSliderItems from "../../components/Sliders/BasicSliderItems";
 import BannerArtist from "../../components/Artists/BannerArtist";
 
 const db = firebase.firestore(firebase);
@@ -42,7 +43,14 @@ function Artist(props) {
   return (
     <div className="artist">
       {artist && <BannerArtist artist={artist} />}
-      <h2>More Info...</h2>
+      <div className="artist__content">
+        <BasicSliderItems
+          title="Albums"
+          data={albums}
+          folderImage="album"
+          urlName="album"
+        />
+      </div>
     </div>
   );
 }
