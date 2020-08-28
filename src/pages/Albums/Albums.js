@@ -42,7 +42,7 @@ export default function Albums(props) {
 function Album(props) {
   const { album } = props;
   const [imageUrl, setImageUrl] = useState(null);
-  console.log(album);
+
   useEffect(() => {
     firebase
       .storage()
