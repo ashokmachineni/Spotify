@@ -5,7 +5,7 @@ import { Link, withRouter } from "react-router-dom";
 import { isUserAdmin } from "../../utils/Api";
 import BasicModel from "../Model/BasicModel";
 import AddArtistForm from "../Artists/AddArtistForm";
-import AddAlbumForm from "../Albums/AddAlbumForm/AddAlbumForm";
+import AddAlbumForm from "../Albums/AddAlbumForm";
 
 function MenuLeft(props) {
   const { user, location } = props;
@@ -70,8 +70,18 @@ function MenuLeft(props) {
             active={activeMenu === "/artists"}
             onClick={handleMenu}
           >
-            <Icon name="music" />
+            <Icon name="user" />
             Artists
+          </Menu.Item>
+          <Menu.Item
+            as={Link}
+            to="/albums"
+            name="albums"
+            active={activeMenu === "/albums"}
+            onClick={handleMenu}
+          >
+            <Icon name="folder" />
+            Albums
           </Menu.Item>
         </div>
         {userAdmin && (
