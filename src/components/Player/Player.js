@@ -4,7 +4,7 @@ import "./Player.scss";
 import ReactPlayer from "react-player";
 export default function Player(props) {
   const { songData } = props;
-  console.log(songData);
+  //console.log(songData);
   const [playing, setPlaying] = useState(false);
   const [playedSeconds, setPlayedSeconds] = useState(0);
   const [totalSeconds, setTotalSeconds] = useState(120);

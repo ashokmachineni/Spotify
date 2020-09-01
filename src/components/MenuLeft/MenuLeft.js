@@ -6,6 +6,7 @@ import { isUserAdmin } from "../../utils/Api";
 import BasicModel from "../Model/BasicModel";
 import AddArtistForm from "../Artists/AddArtistForm";
 import AddAlbumForm from "../Albums/AddAlbumForm";
+import AddSongForm from "../Songs/AddSongForm";
 
 function MenuLeft(props) {
   const { user, location } = props;
@@ -39,7 +40,7 @@ function MenuLeft(props) {
         break;
       case "song":
         setTitleModel("New Song");
-        setContentModel(<h2>add song </h2>);
+        setContentModel(<AddSongForm setShowModel={setShowModel} />);
         setShowModel(true);
         break;
       default:
