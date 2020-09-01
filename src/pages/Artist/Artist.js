@@ -12,7 +12,7 @@ function Artist(props) {
   const { match } = props;
   const [artist, setArtist] = useState(null);
   const [albums, setAlbums] = useState([]);
-  console.log(albums);
+
   useEffect(() => {
     db.collection("artists")
       .doc(match.params.id)

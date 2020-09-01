@@ -10,7 +10,7 @@ const db = firebase.firestore(firebase);
 export default function Home(props) {
   const [artists, setArtists] = useState([]);
   const [albums, setAlbums] = useState([]);
-  console.log(albums);
+
   useEffect(() => {
     db.collection("artists")
       .get()
