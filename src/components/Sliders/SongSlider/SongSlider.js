@@ -40,7 +40,7 @@ function Song(props) {
   const { item, playerSong } = props;
   const [banner, setBanner] = useState(null);
   const [album, setAlbum] = useState(null);
-  console.log(album);
+  //console.log(album);
   useEffect(() => {
     db.collection("albums")
       .doc(item.album)

@@ -6,12 +6,14 @@ import "firebase/firestore";
 import "./Artist.scss";
 import BasicSliderItems from "../../components/Sliders/BasicSliderItems";
 import BannerArtist from "../../components/Artists/BannerArtist";
+import SongSlider from "../../components/Sliders/SongSlider";
 
 const db = firebase.firestore(firebase);
 function Artist(props) {
-  const { match } = props;
+  const { match, playerSong } = props;
   const [artist, setArtist] = useState(null);
   const [albums, setAlbums] = useState([]);
+  const [songs, setSongs] = useState([]);
 
   useEffect(() => {
     db.collection("artists")
@@ -39,6 +41,27 @@ function Artist(props) {
         });
     }
   }, [artist]);
+  useEffect(() => {
+    const arraySongs = [];
+    (async () => {
+      await Promise.all(
+        map(albums, async album => {
+          await db
+            .collection("songs")
+            .where("album", "==", album.id)
+            .get()
+            .then(response => {
+              map(response.docs, song => {
+                const data = song.data();
+                data.id = song.id;
+                arraySongs.push(data);
+              });
+            });
+        })
+      );
+      setSongs(arraySongs);
+    })();
+  }, [albums]);
 
   return (
     <div className="artist">
@@ -49,6 +72,11 @@ function Artist(props) {
           data={albums}
           folderImage="album"
           urlName="album"
+        />
+        <SongSlider
+          title="Popular Songs"
+          data={songs}
+          playerSong={playerSong}
         />
       </div>
     </div>

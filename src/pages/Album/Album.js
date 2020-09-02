@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { Loader } from "semantic-ui-react";
+import { map } from "lodash";
 import firebase from "../../utils/Firebase";
 import "firebase/firestore";
 import "firebase/storage";
@@ -8,11 +9,12 @@ import "./Album.scss";
 
 const db = firebase.firestore(firebase);
 function Album(props) {
-  const { match } = props;
+  const { match, playerSong } = props;
 
   const [album, setAlbum] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [artist, setArtist] = useState(null);
+  const [songs, setSongs] = useState([]);
   //console.log(album);
   //console.log(artist);
   useEffect(() => {
@@ -20,7 +22,9 @@ function Album(props) {
       .doc(match.params.id)
       .get()
       .then(response => {
-        setAlbum(response.data());
+        const data = response.data();
+        data.id = response.id;
+        setAlbum(data);
       });
   }, [match]);
   useEffect(() => {
@@ -41,6 +45,22 @@ function Album(props) {
         .get()
         .then(response => {
           setArtist(response.data());
+        });
+    }
+  }, [album]);
+  useEffect(() => {
+    if (album) {
+      db.collection("songs")
+        .where("album", "==", album.id)
+        .get()
+        .then(response => {
+          const arraySongs = [];
+          map(response.docs, song => {
+            const data = song.data();
+            data.id = song.id;
+            arraySongs.push(data);
+          });
+          setSongs(arraySongs);
         });
     }
   }, [album]);

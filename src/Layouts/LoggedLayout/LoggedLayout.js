@@ -18,7 +18,7 @@ const arrrr = {
 };
 export default function LoggedLayout(props) {
   const { user, setReloadApp } = props;
-  const [songData, setSongData] = useState(arrrr);
+  const [songData, setSongData] = useState("");
   const playerSong = (albumImage, songName, songNameFile) => {
     console.log("albumImage>" + albumImage);
     console.log("songName:>" + songName);
