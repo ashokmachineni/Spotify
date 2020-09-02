@@ -3,7 +3,7 @@ import AuthOptions from "../../components/Auth/AuthOptions";
 import RegisterForm from "../../components/Auth/RegisterForm";
 import LoginForm from "../../components/Auth/LoginForm";
 import BackgroundAuth from "../../assets/jpg/background-auth.jpg";
-import LogoNameWhite from "../../assets/png/logo-name-white.png";
+import LogoNameWhite from "../../assets/png/spotify.png";
 import "./Auth.scss";
 function Auth(props) {
   const [selectedForm, setSelectedForm] = useState(null);

@@ -59,7 +59,7 @@ export default function LoginForm(props) {
   };
   return (
     <div>
-      <h1>Login form</h1>
+      <h1>To continue, log in to Spotify.</h1>
       <Form onSubmit={onSubmit} onChange={onChange}>
         <Form.Field>
           <Input
@@ -104,8 +104,10 @@ export default function LoginForm(props) {
       )}
       <div className="login-form__options">
         <p onClick={() => setSelectedForm(null)}>return</p>
-        Need To Register?
-        <span onClick={() => setSelectedForm("register")}>Register</span>
+        <p>
+          Don't have an account?{" "}
+          <span onClick={() => setSelectedForm("register")}>Register</span>
+        </p>
       </div>
     </div>
   );

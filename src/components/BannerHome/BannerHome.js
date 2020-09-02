@@ -10,7 +10,7 @@ export default function BannerHome() {
   useEffect(() => {
     firebase
       .storage()
-      .ref("other/banner-home.jpg")
+      .ref("other/banner-imag.png")
       .getDownloadURL()
       .then(url => {
         setBannerUrl(url);

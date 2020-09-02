@@ -82,7 +82,7 @@ export default function RegisterForm(props) {
   };
   return (
     <div className="register-form">
-      <h1>Reg sfo</h1>
+      <h1>Sign up for free to start listening.</h1>
       <Form onSubmit={onSubmit} onChange={onChange}>
         <Form.Field>
           <Input
@@ -138,7 +138,7 @@ export default function RegisterForm(props) {
         </Button>
       </Form>
       <div className="register-form__options">
-        <p onClick={() => setSelectedForm(null)}>Return User</p>
+        <p onClick={() => setSelectedForm(null)}>Have an account?</p>
         <p>
           already registered?{" "}
           <span onClick={() => setSelectedForm("login")}>Login</span>
