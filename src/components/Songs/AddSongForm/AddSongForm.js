@@ -4,7 +4,10 @@ import { map } from "lodash";
 import { useDropzone } from "react-dropzone";
 import { toast } from "react-toastify";
 import firebase from "../../../utils/Firebase";
+
+import { v4 as uuidv4 } from "uuid";
 import "firebase/firestore";
+import "firebase/storage";
 import "./AddSongForm.scss";
 
 const db = firebase.firestore(firebase);
@@ -42,7 +45,14 @@ export default function AddSongForm(props) {
     noKeyboard: true,
     onDrop
   });
+  const uploadSong = fileName => {
+    const ref = firebase
+      .storage()
+      .ref()
+      .child(`song/${fileName}`);
 
+    return ref.put(file);
+  };
   const onSubmit = () => {
     if (!formData.name || !formData.album) {
       toast.warning("please fill all fields");
@@ -50,9 +60,37 @@ export default function AddSongForm(props) {
       toast.warning("please choose mp3 file to upload");
     } else {
       setIsLoading(true);
+      const fileName = uuidv4();
+      uploadSong(fileName)
+        .then(() => {
+          db.collection("songs")
+            .add({
+              name: formData.name,
+              album: formData.album,
+              fileName: fileName
+            })
+            .then(() => {
+              toast.success("Song successfully uploaded");
+              resetForm();
+              setIsLoading(false);
+              setShowModel(false);
+            })
+            .catch(() => {
+              toast.error("error while resetting the form");
+              setIsLoading(false);
+            });
+        })
+        .catch(() => {
+          toast.error("song uploading failed");
+          setIsLoading(false);
+        });
     }
   };
-
+  const resetForm = () => {
+    setFormData(initialValueForm());
+    setFile(null);
+    setAlbums([]);
+  };
   return (
     <Form className="add-song-form" onSubmit={onSubmit}>
       <Form.Field>
