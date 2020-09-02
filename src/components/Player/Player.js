@@ -70,6 +70,7 @@ export default function Player(props) {
         volume={volume}
         height="0"
         width="0"
+        onProgress={e => onProgress(e)}
       />
     </div>
   );
