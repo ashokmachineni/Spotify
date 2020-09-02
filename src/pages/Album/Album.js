@@ -6,6 +6,7 @@ import firebase from "../../utils/Firebase";
 import "firebase/firestore";
 import "firebase/storage";
 import "./Album.scss";
+import ListSongs from "../../components/Songs/ListSongs";
 
 const db = firebase.firestore(firebase);
 function Album(props) {
@@ -74,7 +75,7 @@ function Album(props) {
         <HeaderAlbum album={album} imageUrl={imageUrl} artist={artist} />
       </div>
       <div className="album__songs">
-        <p>here songs</p>
+        <ListSongs songs={songs} imageUrl={imageUrl} playerSong={playerSong} />
       </div>
     </div>
   );
